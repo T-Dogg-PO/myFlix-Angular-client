@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // Declaring the api url that will provide data for the client app
-const apiUrl = 'https://t-dogg-movies-api.herokuapp.com';
+const apiUrl = 'https://t-dogg-movies-api.herokuapp.com/';
 
 // Detractor is a function that augments a piece of code
 // In this case, telling Angular that this service will be available everywhere (hence the 'root')
@@ -13,7 +13,7 @@ const apiUrl = 'https://t-dogg-movies-api.herokuapp.com';
   providedIn: 'root'
 })
 
-export class UserRegistrationService {
+export class ApiDataService {
   // Inject the HttpClient module to the constructor params
   // This will provide HttpClient to the entire class, making it available via this.http
   constructor(private http: HttpClient) {}
