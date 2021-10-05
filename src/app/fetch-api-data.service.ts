@@ -114,9 +114,10 @@ export class ApiDataService {
   }
 
   // Call for adding a favourite movie for one user (the currently logged in user)
-  addUserFavourite(username: string, movieID: string): Observable<any> {
+  addUserFavourite(movieID: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.post(apiUrl + `users/${username}/Movies/${movieID}`, {headers: new HttpHeaders(
+    const user = localStorage.getItem('user');
+    return this.http.post(apiUrl + `users/${user}/Movies/${movieID}`, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       }
@@ -127,9 +128,10 @@ export class ApiDataService {
   }
 
   // Call for removing a favourite movie for one user (the currently logged in user)
-  removeUserFavourite(username: string, movieID: string): Observable<any> {
+  removeUserFavourite(movieID: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.delete(apiUrl + `users/${username}/Movies/${movieID}`, {headers: new HttpHeaders(
+    const user = localStorage.getItem('user');
+    return this.http.delete(apiUrl + `users/${user}/Movies/${movieID}`, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       }
@@ -140,8 +142,9 @@ export class ApiDataService {
   }
 
   // Call for editing user details
-  editUser(username: string): Observable<any> {
+  editUser(userData: any): Observable<any> {
     const token = localStorage.getItem('token');
+    const username = localStorage.getItem('user');
     return this.http.put(apiUrl + `users/${username}`, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
