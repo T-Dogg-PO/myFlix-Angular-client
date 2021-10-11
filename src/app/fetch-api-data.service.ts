@@ -117,7 +117,7 @@ export class ApiDataService {
   addUserFavourite(movieID: string): Observable<any> {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-    return this.http.post(apiUrl + `users/${user}/Movies/${movieID}`, {headers: new HttpHeaders(
+    return this.http.post(apiUrl + `users/${user}/Movies/${movieID}`, movieID, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       }
@@ -145,7 +145,7 @@ export class ApiDataService {
   editUser(userData: any): Observable<any> {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('user');
-    return this.http.put(apiUrl + `users/${username}`, {headers: new HttpHeaders(
+    return this.http.put(apiUrl + `users/${username}`, userData, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       }

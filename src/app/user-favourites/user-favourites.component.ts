@@ -21,7 +21,9 @@ export class UserFavouritesComponent implements OnInit {
   movies: any = [];
   // The favourites variable (an array) is where the users favourite movies will be stored
   favourites: any = [];
-  user: any = localStorage.getItem('user')
+  user: any = localStorage.getItem('user');
+  // favouriteMovieDetails is the array that will store the actual movie details (not just the ID of the movies) after the filterMovies function is run
+  favouriteMovieDetails: any = [];
 
   constructor(public fetchApiData: ApiDataService, public dialog: MatDialog) { }
 
@@ -34,7 +36,6 @@ export class UserFavouritesComponent implements OnInit {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
-      console.log(this.movies);
       return this.movies;
     });
   }
@@ -43,7 +44,7 @@ export class UserFavouritesComponent implements OnInit {
   getUserFavourites(): void {
     this.fetchApiData.getUser(this.user).subscribe((resp: any) => {
       this.favourites = resp.FavouriteMovies;
-      return this.favourites;
+      return this.filterMovies();
     });
   }
 
@@ -51,10 +52,10 @@ export class UserFavouritesComponent implements OnInit {
   filterMovies(): void {
     this.movies.forEach((movie: any) => {
       if (this.favourites.includes(movie._id)) {
-        this.favourites.push(movie);
+        this.favouriteMovieDetails.push(movie);
       }
     });
-    return this.favourites;
+    return this.favouriteMovieDetails;
   }
 
   // Function that should allow for dynamic display of favourites (i.e. update in real time when movies are added/removed from the favourites list)

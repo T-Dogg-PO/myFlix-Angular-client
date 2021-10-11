@@ -1,0 +1,11 @@
+.favorite-button-active {
+    color: red;
+}
+
+.movie-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 25px;
+    margin-right: 25px;
+}

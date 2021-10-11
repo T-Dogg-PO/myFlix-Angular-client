@@ -7,6 +7,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 // This import is used to display notifications back to the user
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-edit-user-profile',
   templateUrl: './edit-user-profile.component.html',
@@ -19,8 +21,14 @@ export class EditUserProfileComponent implements OnInit {
   constructor(
     public fetchApiData: ApiDataService,
     public dialogRef: MatDialogRef<EditUserProfileComponent>,
-    public snackBar: MatSnackBar
-    ) { }
+    public snackBar: MatSnackBar,
+    public router: Router
+    ) 
+    // https://stackoverflow.com/questions/59552387/how-to-reload-a-page-in-angular-8-the-proper-way - Trying to get refreshing user details after update working
+    { this.router.routeReuseStrategy.shouldReuseRoute = () => {
+          return false;
+        };
+      }
 
   ngOnInit(): void {
   }
@@ -29,7 +37,8 @@ export class EditUserProfileComponent implements OnInit {
   editUserDetails(): void {
     this.fetchApiData.editUser(this.userData).subscribe((result) => {
       this.dialogRef.close();
-      localStorage.setItem('user', result.dataReturned.Username);
+      localStorage.setItem('user', result.Username);
+      this.router.navigateByUrl('/user');
       this.snackBar.open('User details updated!', 'OK', {
         duration: 2000
       });

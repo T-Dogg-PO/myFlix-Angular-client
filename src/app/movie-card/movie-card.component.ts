@@ -20,7 +20,7 @@ export class MovieCardComponent {
   movies: any = [];
   // The favourites variable (an array) is where the users favourite movies will be stored
   favourites: any = [];
-  user: any = localStorage.getItem('user')
+  user: any = localStorage.getItem('user');
 
   // Declaring public fetchApiData: ApiDataService in the constructor will make the ApiDataService available using this.fetchApiData
   constructor(public fetchApiData: ApiDataService, public dialog: MatDialog) { }
@@ -34,7 +34,6 @@ export class MovieCardComponent {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
-      console.log(this.movies);
       return this.movies;
     });
   }

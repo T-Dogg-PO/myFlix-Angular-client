@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
-<div style="display: flex;">
-    <mat-card *ngFor="let movie of favourites; let i=index;" style="flex: 1 1 auto">
+<div class="movie-container">
+    <mat-card *ngFor="let movie of favouriteMovieDetails; let i=index;" style="flex: 1 1 auto">
         <mat-card-header>
             <mat-card-title>{{movie.Title}}</mat-card-title>
             <mat-card-subtitle>Directed by: {{movie.Director.Name}}</mat-card-subtitle>
         </mat-card-header>
-        <mat-dialog-content>
+        <mat-card-content>
             <img src={{movie.ImagePath}}/>
             <mat-card-actions>
                 <button
@@ -26,6 +26,6 @@
                 <mat-icon *ngIf="!movieIsFavourite(movie._id)" (click)="addFavouriteMovie(movie._id)" class="favorite-button">favorite_border</mat-icon>
                 <mat-icon *ngIf="movieIsFavourite(movie._id)" (click)="removeFavouriteMovie(movie._id)" class="favorite-button-active">favorite</mat-icon>
             </mat-card-actions>
-        </mat-dialog-content>
+        </mat-card-content>
     </mat-card>
 </div>
