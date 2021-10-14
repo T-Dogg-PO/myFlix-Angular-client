@@ -9,7 +9,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DirectorComponent implements OnInit {
 
   constructor(
-    // Use @Inject with the MAT_DIALOG_DATA injection token to access director data from the movie in question - https://material.angular.io/components/dialog/overview
+    /**
+     * Use @Inject with the MAT_DIALOG_DATA injection token to access director data from the movie in question - https://material.angular.io/components/dialog/overview
+    */
     @Inject(MAT_DIALOG_DATA) public data: {
       Name: string;
       Bio: string;

@@ -9,7 +9,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class GenreComponent implements OnInit {
 
   constructor(
-    // Use @Inject with the MAT_DIALOG_DATA injection token to access genre data from the movie in question - https://material.angular.io/components/dialog/overview
+    /**
+     * Use @Inject with the MAT_DIALOG_DATA injection token to access genre data from the movie in question - https://material.angular.io/components/dialog/overview
+    */
     @Inject(MAT_DIALOG_DATA) public data: {
       Name: string;
       Description: string;

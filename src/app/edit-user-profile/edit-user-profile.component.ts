@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ApiDataService } from '../fetch-api-data.service';
+import { FetchApiDataService } from '../fetch-api-data.service';
 
 // Use this import to close the dialog on success
 import { MatDialogRef } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ export class EditUserProfileComponent implements OnInit {
   @Input() userData = { Username: '', Password: '', Email: '', Birthday: ''};
 
   constructor(
-    public fetchApiData: ApiDataService,
+    public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<EditUserProfileComponent>,
     public snackBar: MatSnackBar,
     public router: Router
@@ -33,7 +33,10 @@ export class EditUserProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // Function to make the API call to edit user details
+  /**
+   * Function that will edit user details by making the API call through the ApiDataService component (defined in fetch-api-data.service.ts).
+   * The userData that is passed to this API call is obtained from the user inputs defined in the Input detractor above
+  */
   editUserDetails(): void {
     this.fetchApiData.editUser(this.userData).subscribe((result) => {
       this.dialogRef.close();

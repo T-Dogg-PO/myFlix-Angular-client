@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 // Use this import to bring in the API calls
-import { ApiDataService } from '../fetch-api-data.service';
+import { FetchApiDataService } from '../fetch-api-data.service';
 
 // This import is used to display notifications back to the user
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,7 +22,7 @@ export class UserLoginFormComponent implements OnInit {
   @Input() userData = { Username: '', Password: ''};
 
   constructor(
-    public fetchApiData: ApiDataService,
+    public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
     public snackBar: MatSnackBar,
     public router: Router,
@@ -31,7 +31,10 @@ export class UserLoginFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // This is the function responsible for sending the form inputs to the backend
+  /**
+   * Function that will log a user in by making the API call through the ApiDataService component (defined in fetch-api-data.service.ts).
+   * The userData that is passed to this API call is obtained from the user inputs defined in the Input detractor above
+  */
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe((result) => {
       // Logic for a successful user login will be found here soon

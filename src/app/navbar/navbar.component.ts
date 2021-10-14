@@ -7,15 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  // // User should be a global variable here, since it will need to be used in a few different functions (can be obtained from local storage)
-  // // Need to use JSON.parse here as per - https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not-assignable-to-parameter-of-type-string
-  // user = localStorage.getItem('user');
-
   constructor(public router: Router) { }
 
   ngOnInit(): void {
   }
 
+  /**
+   * Logout is a function that will clear the local storage (of both the username and the access token), then reroute the user to the welcome page
+  */
   logout(): void {
     localStorage.clear();
     this.router.navigate(['welcome']);

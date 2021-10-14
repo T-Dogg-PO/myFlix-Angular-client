@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiDataService } from '../fetch-api-data.service';
+import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DirectorComponent } from '../director/director.component';
 import { GenreComponent } from '../genre/genre.component';
 import { MovieDetailsComponent } from '../movie-details/movie-details.component';
-
-// User should be a global variable here, since it will need to be used in a few different functions (can be obtained from local storage)
-// Need to use JSON.parse here as per - https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not-assignable-to-parameter-of-type-string
-// const user = JSON.parse(localStorage.getItem('user') || '{}');
 
 @Component({
   selector: 'app-movie-card',
@@ -16,47 +12,61 @@ import { MovieDetailsComponent } from '../movie-details/movie-details.component'
   styleUrls: ['./movie-card.component.scss']
 })
 export class MovieCardComponent {
-  // The movies variable (declared here as an array) is where the movies returned from the API will be stored
+  /**
+   * Here the variables that will be used in this component are initialized.
+   * The movies variable (declared here as an array) is where the movies returned from the API will be stored
+   * The favourites variable (an array) is where the users favourite movies will be stored
+   * user is the username of the currently logged in user (obtained from local storage, where it is set upon login)
+   * favouriteMovieDetails is the array that will store the actual movie details (not just the ID of the movies) after the filterMovies function is run
+  */
   movies: any = [];
-  // The favourites variable (an array) is where the users favourite movies will be stored
   favourites: any = [];
   user: any = localStorage.getItem('user');
+  favouriteMovieDetails: any = [];
 
   // Declaring public fetchApiData: ApiDataService in the constructor will make the ApiDataService available using this.fetchApiData
-  constructor(public fetchApiData: ApiDataService, public dialog: MatDialog) { }
+  constructor(public fetchApiData: FetchApiDataService, public dialog: MatDialog) { }
 
   // ngOnInit is called when Angular is done creating the component
   ngOnInit(): void {
-    this.getMovies();
+    this.getUserFavourites();
   }
 
-  // The getMovies function will use the ApiDataService to make an API call with getAllMovies()
+  /**
+   * The getMovies function will use the ApiDataService to make an API call with getAllMovies()
+  */
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
-      return this.movies;
+      this.filterMovies();
     });
   }
 
-  // The getUserFavourites function will use the ApiDataService to make an API call with getUser() (the favourites data will be extracted from the user object)
+  /**
+   * The getUserFavourites function will use the ApiDataService to make an API call with getUser() (the favourites data will be extracted from the user object)
+  */
   getUserFavourites(): void {
     this.fetchApiData.getUser(this.user).subscribe((resp: any) => {
       this.favourites = resp.FavouriteMovies;
-      return this.favourites;
+      this.getMovies();
     });
   }
 
-  // Because getUserFavourites will only return the ID's of the favourite movies, the filterMovies() function will filter the full list of movies (from getMovies()) to cut down the movies array
+  /**
+   * Because getUserFavourites will only return the ID's of the favourite movies, the filterMovies() function will filter the full list of movies (from getMovies()) to cut down the movies array
+  */
   filterMovies(): void {
     this.movies.forEach((movie: any) => {
       if (this.favourites.includes(movie._id)) {
-        this.favourites.push(movie);
+        this.favouriteMovieDetails.push(movie);
       }
     });
-    return this.favourites;
   }
 
-  // openDirectorDialog opens the modal with director details
+  /**
+   * openDirectorDialog opens the modal with director details
+   * Takes the Director details as parameters, which will fill in the Director modal
+  */
   openDirectorDialog(Name: string, Bio: string, Birth: string, Death: string): void {
     this.dialog.open(DirectorComponent, {
       data: {Name, Bio, Birth, Death},
@@ -64,7 +74,10 @@ export class MovieCardComponent {
     });
   }
 
-  // openGenreDialog opens the modal with genre details
+  /**
+   * openGenreDialog opens the modal with genre details
+   * Takes the Genre details as parameters, which will fill in the Genre modal
+  */
   openGenreDialog(Name: string, Description: string): void {
     this.dialog.open(GenreComponent, {
       data: {Name, Description},
@@ -72,7 +85,10 @@ export class MovieCardComponent {
     });
   }
 
-  // openDetailsDialog opens the modal with more movie details (e.g. the description)
+  /**
+   * openDetailsDialog opens the modal with more movie details (e.g. the description)
+   * Takes the Movie details as parameters, which will fill in the Movie modal
+  */
   openDetailsDialog(Title: string, Description: string, ImagePath: string): void {
     this.dialog.open(MovieDetailsComponent, {
       data: {Title, Description, ImagePath},
@@ -80,21 +96,30 @@ export class MovieCardComponent {
     });
   }
 
-  // addFavouriteMovie will add the selected movie to the users favourites, using the API call addUserFavourite()
+  /**
+   * addFavouriteMovie will add the selected movie to the users favourites, using the API call addUserFavourite()
+   * @param movieID a string that will be passed to the addUserFavourite function detailing which movie is being added to the users favourites
+  */
   addFavouriteMovie(movieID: string): void {
     this.fetchApiData.addUserFavourite(movieID).subscribe((resp: any) => {
       return this.getUserFavourites();
     });
   }
 
-  // removeFavouriteMovie will remove the selected movie from the users favourites, using the API call removeUserFavourite()
+  /**
+   * removeFavouriteMovie will remove the selected movie from the users favourites, using the API call removeUserFavourite()
+   * @param movieID a string that will be passed to the removeUserFavourite function detailing which movie is being removied to the users favourites
+  */
   removeFavouriteMovie(movieID: string): void {
     this.fetchApiData.removeUserFavourite(movieID).subscribe((resp: any) => {
       return this.getUserFavourites();
     })
   }
 
-  // Function that should allow for dynamic display of favourites (i.e. update in real time when movies are added/removed from the favourites list)
+  /**
+   * Function that should allow for dynamic display of favourites (i.e. update in real time when movies are added/removed from the favourites list)
+   * @param movieID will go through all the movies displayed on the page, and return true/false for each depending on if they are found in the users favourites
+  */
   movieIsFavourite(movieID: any): any {
     if (this.favourites.includes(movieID)) {
       return true;
