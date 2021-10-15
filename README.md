@@ -1,27 +1,23 @@
-# MyFlixAngularClient
+# myFlix Client with Angular
+As part of my larger 'myFlix' project (a website designed to be a movie database, similar to [IMDB](https://www.imdb.com/)), this is the frontend logic primarily built using Angular.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
+## Purpose
+The purpose of the myFlix site is to get exposure to and practice using the full MEAN stack, building a full stack website in the process. This part in particular is the frontend logic built with Angular, which displays the user interface and allows the user to interact with the server.
 
-## Development server
+This project is very similar to the one I have built using React. However, I wanted to rebuild at least part of the frontend using Angular to get exposure to a different popular JavaScript framework, as well as get exposure to TypeScript.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Technologies Used
+* Angular
+* TypeScript
+* Angular Material
 
-## Code scaffolding
+## Usage
+A live version of the website can be found here (hosted using Github Pages) - https://t-dogg-po.github.io/myFlix-Angular-client/welcome
+### Landing Page
+The site will default to the login page. Register a new user and then log in!
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Movies Page
+After logging in the user will be directed to the full list of movies within the database. From here, the user can navigate to their user profile page, see more details about a movie and add it to their favourites list.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### User Profile Page
+From the user profile page, the user can see their list of favourite movies, update their user details or delete their user profile.
