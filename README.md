@@ -1,5 +1,6 @@
 # myFlix Client with Angular
 As part of my larger 'myFlix' project (a website designed to be a movie database, similar to [IMDB](https://www.imdb.com/)), this is the frontend logic primarily built using Angular.
+<img src="assets/myflix-angular.PNG" style="max-width: 100%;">
 
 ## Purpose
 The purpose of the myFlix site is to get exposure to and practice using the full MEAN stack, building a full stack website in the process. This part in particular is the frontend logic built with Angular, which displays the user interface and allows the user to interact with the server.
